@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "lint": "tslint -p . -t verbose",
-    "test": "npm run lint"
+    "test": "npm run lint",
+    "clean": "rm -rf build",
+    "make": "tsc",
+    "watch": "tsc -w --preserveWatchOutput",
+    "start": "node build/index.js"
   },
   "keywords": [
     "crawler",

@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "rootDir": "source",
+    "outDir": "build",
+
     "target": "esnext",
     "module": "commonjs",
     "strict": true,
