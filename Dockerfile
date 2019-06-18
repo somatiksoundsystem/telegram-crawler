@@ -12,6 +12,6 @@ RUN npm install
 
 COPY . ./
 
-RUN npm run build
+RUN npm run make
 
 CMD [ "pm2-runtime", "start", "ecosystem.config.js" ]

@@ -4,7 +4,7 @@ module.exports = {
       name: 'app',
       script: 'build/index.js',
       // instances: "max",
-      // autorestart: true,
+      autorestart: true,
       watch: 'build/**/*.js',
       max_memory_restart: '1G',
       env: {
@@ -16,7 +16,7 @@ module.exports = {
     },
     {
       name: 'app-watcher',
-      script: 'npm watch',
+      script: 'npm run watch',
       instances: 1,
       autorestart: true,
       watch: 'tsconfig.json',
