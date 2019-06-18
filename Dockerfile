@@ -2,7 +2,7 @@ FROM node:10-alpine
 
 WORKDIR /app
 
-RUN apk add --no-cache bash
+RUN apk add --no-cache bash make gcc g++ python
 
 RUN npm install -g pm2
 
