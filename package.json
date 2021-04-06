@@ -19,7 +19,10 @@
   "license": "MIT",
   "dependencies": {
     "airgram": "1.0.3",
+    "dotenv": "8.2.0",
     "express": "4.17.1",
+    "pg": "7.17.1",
+    "telegram": "1.2.7",
     "telegram-mtproto": "2.2.2",
     "typescript": "3.5.2"
   },
