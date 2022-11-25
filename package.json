@@ -1,39 +1,30 @@
 {
-  "name": "@zeckson/telegram-crawler",
+  "name": "somatik-news",
   "version": "0.0.1",
-  "description": "Telegram Crawler for News",
+  "description": "Somatik News Bot Crawler",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "lint": "tslint -p . -t verbose",
-    "test": "npm run lint",
-    "clean": "rm -rf build",
-    "make": "tsc",
-    "watch": "tsc -w --preserveWatchOutput",
-    "start": "node build/index.js"
-  },
-  "keywords": [
-    "crawler",
-    "telegram"
-  ],
-  "author": "Evgenii Shchepotev",
-  "license": "MIT",
-  "dependencies": {
-    "airgram": "1.0.3",
-    "dotenv": "8.2.0",
-    "express": "4.17.1",
-    "pg": "7.17.1",
-    "telegram": "1.2.7",
-    "telegram-mtproto": "2.2.2",
-    "typescript": "3.5.2"
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:somatik-web/telegram-crawler.git"
+    "url": "git+https://github.com/somatiksoundsystem/telegram-crawler.git"
   },
-  "devDependencies": {
-    "@types/express": "4.17.0",
-    "@types/node": "12.0.8",
-    "ts-node": "8.3.0",
-    "tslint": "5.17.0"
+  "keywords": [
+    "crawler",
+    "somatik",
+    "news"
+  ],
+  "author": "Evgenii Shchepotev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/somatiksoundsystem/telegram-crawler/issues"
+  },
+  "homepage": "https://github.com/somatiksoundsystem/telegram-crawler#readme",
+  "dependencies": {
+    "dotenv": "16.0.3",
+    "telegraf": "4.11.2"
   }
 }
