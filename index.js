@@ -1,5 +1,4 @@
 import {Telegraf} from "telegraf"
-import {channelPost, editedChannelPost} from "telegraf/filters"
 import {config as dotenv} from "dotenv"
 import {debug} from "./src/debug.js";
 import {post} from "./src/channel-post.js";
