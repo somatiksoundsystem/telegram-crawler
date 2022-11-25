@@ -34,6 +34,7 @@ jspm_packages/
 
 # IDE
 .idea
+.fleet
 
 # compiled files
 build/
