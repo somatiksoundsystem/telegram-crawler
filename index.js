@@ -1,16 +1,15 @@
 import {Telegraf} from "telegraf"
+import {channelPost, editedChannelPost} from "telegraf/filters"
 import {config as dotenv} from "dotenv"
+import {debug} from "./src/debug.js";
+import {post} from "./src/channel-post.js";
 
 dotenv()
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
-bot.use((ctx, next) => {
-    console.log(ctx.updateType)
-    console.log(ctx.message ?? ctx)
-    return next()
-})
-
+bot.use(debug)
+bot.use(post)
 
 bot.launch().catch((e) => {
     console.error(e.message)
