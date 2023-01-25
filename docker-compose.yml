@@ -1,0 +1,21 @@
+version: "3"  # optional since v1.27.0
+services:
+
+  mysql:
+    image: mariadb:10.9
+    volumes:
+      - somatik-mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    restart: always
+
+volumes:
+  somatik-mysql:
+
+networks:
+  default:
+    name: nginx-proxy
+
