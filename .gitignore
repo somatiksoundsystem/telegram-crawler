@@ -39,3 +39,7 @@ jspm_packages/
 # compiled files
 build/
 
+# db files
+*.db
+migration_lock.toml
+
