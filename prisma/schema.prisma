@@ -11,9 +11,21 @@ datasource db {
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean  @default(false)
-  authorId  Int?
+  id          Int      @id @default(autoincrement())
+  telegram_id BigInt
+  text        String
+  signature   String?
+  date        DateTime
+  photos      Photo[]
+}
+
+model Photo {
+  id             Int    @id @default(autoincrement())
+  file_unique_id String
+  file_id        String
+  post           Post   @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  post_id        Int
+  width          Int
+  height         Int
+  size           Int
 }
