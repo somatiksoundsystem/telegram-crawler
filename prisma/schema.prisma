@@ -12,10 +12,12 @@ datasource db {
 
 model Post {
   id          Int      @id @default(autoincrement())
-  telegram_id BigInt
+  telegram_id BigInt   @unique
   text        String
+  html        String
   signature   String?
   date        DateTime
+  content     String
   photos      Photo[]
 }
 

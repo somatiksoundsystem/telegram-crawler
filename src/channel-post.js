@@ -1,28 +1,23 @@
-const saveOrUpdateChannelPost = (post, isNew) => {
+import { Post } from "./entity/post.js";
+
+const printChannelPostInfo = (post, isNew) => {
     console.log(post)
     console.log(`${isNew ? `New` : `Updated`} channel post: ${post.text || post.caption}`)
     return post
 }
 
-const getPhotoLinks = async (post, ctx) => {
-    if (post && post.photo) {
-        const files = post.photo.map((it) => ctx.telegram.getFileLink(it.file_id));
-        for await (const file of files) {
-            console.log(file)
-        }
-    }
-}
-
 export const post = (ctx) => {
     const update = ctx.update
-    let post;
+    const db = ctx.prisma
     switch (ctx.updateType) {
         case `channel_post`:
-            post = saveOrUpdateChannelPost(update.channel_post, true)
+            printChannelPostInfo(update.channel_post, true)
+            const myPost = new Post(update.channel_post)
+            myPost.html
+            db.savePost(myPost).catch((e) => console.error(e))
             break
         case `edited_channel_post`:
-            post = saveOrUpdateChannelPost(update.edited_channel_post, false)
+            printChannelPostInfo(update.edited_channel_post, false)
             break
     }
-    getPhotoLinks(post, ctx).catch((e) => console.error(e));
 }

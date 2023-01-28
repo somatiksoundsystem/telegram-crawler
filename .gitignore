@@ -41,5 +41,6 @@ build/
 
 # db files
 *.db
+*.db-*
 migration_lock.toml
 
