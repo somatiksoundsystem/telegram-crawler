@@ -6,18 +6,16 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
 model Post {
   id          Int      @id @default(autoincrement())
   telegram_id BigInt   @unique
-  text        String
-  html        String
   signature   String?
   date        DateTime
-  content     String
+  content     Json
   photos      Photo[]
 }
 
@@ -25,7 +23,7 @@ model Photo {
   id             Int    @id @default(autoincrement())
   file_unique_id String
   file_id        String
-  post           Post   @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  post           Post   @relation(fields: [post_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   post_id        Int
   width          Int
   height         Int

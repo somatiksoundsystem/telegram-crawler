@@ -12,11 +12,9 @@ export class Post {
          */
         this.data = {
             telegram_id: post.message_id,
-            text: this.text,
-            html: this.html,
             signature: post.author_signature,
             date: new Date(post.date),
-            content: JSON.stringify(post)
+            content: post
         }
 
         this.photos = post.photo?.map((it) => new Photo(it))

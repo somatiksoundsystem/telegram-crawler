@@ -13,7 +13,6 @@ export const post = (ctx) => {
         case `channel_post`:
             printChannelPostInfo(update.channel_post, true)
             const myPost = new Post(update.channel_post)
-            myPost.html
             db.savePost(myPost).catch((e) => console.error(e))
             break
         case `edited_channel_post`:
