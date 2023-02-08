@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Somatik News Bot Crawler",
   "main": "index.js",
+  "private": true,
   "type": "module",
   "scripts": {
     "generate": "prisma generate",
@@ -27,7 +28,11 @@
   "dependencies": {
     "@prisma/client": "4.9.0",
     "dotenv": "16.0.3",
-    "telegraf": "4.11.2"
+    "telegraf": "4.11.2",
+    "ejs": "3.1.8",
+    "express": "4.18.2",
+    "http-errors": "1.6.3",
+    "morgan": "1.9.1"
   },
   "devDependencies": {
     "prisma": "4.9.0"

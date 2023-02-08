@@ -3,6 +3,7 @@ import { config as dotenv } from 'dotenv'
 import { debug } from './src/debug.js'
 import { post } from './src/channel-post.js'
 import { closeDatabase, middleware } from "./src/db.js";
+import webApp from "./web.js"
 
 dotenv()
 
@@ -29,3 +30,8 @@ process.once(`SIGTERM`, () => finish(`SIGTERM`))
 
 const me = await bot.telegram.getMe()
 console.log(`Bot is started https://t.me/${me.username}!`)
+
+const PORT = 3000
+
+webApp.listen(PORT)
+console.log(`Express started on port ${PORT}`)
