@@ -1,4 +1,4 @@
-version: "3"  # optional since v1.27.0
+version: "3.8"  # optional since v1.27.0
 services:
 
   mysql:
@@ -11,6 +11,8 @@ services:
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
     restart: always
+    ports:
+      - "3306:3306"
 
 volumes:
   somatik-mysql:

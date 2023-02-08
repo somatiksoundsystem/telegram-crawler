@@ -1,6 +1,6 @@
 import { isDev } from "./util.js";
 
-export const wait = (fn) => (req, res) => Promise.resolve(fn()).catch((e) => renderError(res, e))
+export const wait = (fn) => (req, res) => Promise.resolve(fn(req, res)).catch((e) => renderError(res, e))
 
 export const renderError = (res, err) => {
     // render the error page

@@ -37,6 +37,7 @@ let server
 const TIMEOUT = 10000
 
 export default {
+  app,
   start: (port) => {
     if (server) throw new Error(`Server is already started on port: ${server.port}`)
     server = app.listen(port, () => console.log(`Express started on port ${port}`))

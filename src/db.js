@@ -25,8 +25,10 @@ export const savePost = async (post) => {
 }
 
 prisma.savePost = savePost
-
+prisma.getPosts = () => prisma.post.findMany()
 export const closeDatabase = () => prisma.$disconnect()
+
+export const db = prisma
 
 export const middleware = (ctx, next) => {
     ctx.prisma = prisma

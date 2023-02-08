@@ -2,7 +2,7 @@ import { Telegraf } from 'telegraf'
 import { config as dotenv } from 'dotenv'
 import { debug } from './src/debug.js'
 import { post } from './src/channel-post.js'
-import { closeDatabase, middleware } from "./src/db.js";
+import { closeDatabase, db, middleware } from "./src/db.js";
 import webApp from "./web.js"
 
 dotenv()
@@ -19,6 +19,7 @@ const me = await bot.telegram.getMe()
 console.log(`Bot is started https://t.me/${me.username}!`)
 
 const PORT = 3000
+webApp.app.set(`prisma`, db)
 webApp.start(PORT)
 
 const shutdown = (reason) => {
