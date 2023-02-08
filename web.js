@@ -33,4 +33,29 @@ app.use((req, res, next) => {
 // error handler
 app.use((err, req, res, _next) => renderError(res, err))
 
-export default app
+let server
+const TIMEOUT = 10000
+
+export default {
+  start: (port) => {
+    if (server) throw new Error(`Server is already started on port: ${server.port}`)
+    server = app.listen(port, () => console.log(`Express started on port ${port}`))
+  },
+  stop: () => {
+    if (!server) throw new Error(`Server is not started!`)
+    return new Promise((resolve, reject) => {
+      console.log('Received kill signal, shutting down gracefully')
+
+      const timeout = setTimeout(
+        () => reject(`Could not close connections in ${TIMEOUT}ms`),
+        TIMEOUT)
+
+      server.close(() => {
+        console.log('Closed out remaining connections')
+        clearTimeout(timeout)
+        resolve()
+        server = undefined
+      })
+    })
+  }
+}

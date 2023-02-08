@@ -13,25 +13,25 @@ bot.use(debug)
 bot.use(middleware)
 bot.use(post)
 
-const finish = (reason) => {
-    closeDatabase(reason)
-        .then(() => bot.stop(reason))
-        .catch((e) => {
-            console.error(e)
-            bot.stop(reason)
-        })
-}
-
-bot.launch().catch((e) => finish(e.message))
-
-// Enable graceful stop
-process.once(`SIGINT`, () => finish(`SIGINT`))
-process.once(`SIGTERM`, () => finish(`SIGTERM`))
+bot.launch().catch((e) => shutdown(e.message))
 
 const me = await bot.telegram.getMe()
 console.log(`Bot is started https://t.me/${me.username}!`)
 
 const PORT = 3000
+webApp.start(PORT)
 
-webApp.listen(PORT)
-console.log(`Express started on port ${PORT}`)
+const shutdown = (reason) => {
+    console.log(`Shutting down server. Reason: ${reason}`)
+    closeDatabase(reason)
+        .then(() => bot.stop(reason))
+        .then(() => webApp.stop())
+        .catch((e) => {
+            console.error(e)
+            process.exit(1)
+        })
+}
+
+// Enable graceful stop
+process.once(`SIGINT`, () => shutdown(`SIGINT`))
+process.once(`SIGTERM`, () => shutdown(`SIGTERM`))
