@@ -1,38 +1,41 @@
-import { PrismaClient } from '@prisma/client'
+import { DataSource } from "typeorm";
+import { Post } from "./entity/post.js";
 
-const prisma = new PrismaClient()
-export const savePost = async (post) => {
-    const data = {
-        ...post.data,
-    }
-
-    if (post.photos) {
-        data.photos = {
-            create: post.photos.map((it) => it.data)
-        }
-    }
-
-    const newPost = await prisma.post.create({
-        data: data,
-        include: {
-            photos: true,
+export const init = async () => {
+    const dataSource = new DataSource({
+        type: "mysql",
+        host: "localhost",
+        port: 3306,
+        username: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME,
+        synchronize: false,
+        logging: true,
+        entities: [Post.schema],
+        subscribers: [],
+        migrations: [],
+        extra: {
+            charset: "utf8mb4_unicode_ci"
         },
     })
 
-    console.log(`Created a new post: `, newPost)
+    const connection = await dataSource.initialize()
 
-    return newPost
+    return {
+        async savePost(post) {
+            const repository = connection.getRepository(Post)
+
+            const saved = await repository.save(post);
+
+            console.log(`Created a new post: `, saved)
+
+            return saved
+        },
+        async getPosts() {
+            return connection.getRepository(Post).find()
+        },
+        async close() {
+            return dataSource.destroy()
+        }
+    }
 }
-
-prisma.savePost = savePost
-prisma.getPosts = () => prisma.post.findMany()
-export const closeDatabase = () => prisma.$disconnect()
-
-export const db = prisma
-
-export const middleware = (ctx, next) => {
-    ctx.prisma = prisma
-    return next()
-}
-
-

@@ -8,11 +8,12 @@ const printChannelPostInfo = (post, isNew) => {
 
 export const post = (ctx) => {
     const update = ctx.update
-    const db = ctx.prisma
+    const db = ctx.db
     switch (ctx.updateType) {
         case `channel_post`:
-            printChannelPostInfo(update.channel_post, true)
-            const myPost = new Post(update.channel_post)
+            const post = update.channel_post;
+            printChannelPostInfo(post, true)
+            const myPost = new Post(post.message_id, post, post.author_signature, post.date)
             db.savePost(myPost).catch((e) => console.error(e))
             break
         case `edited_channel_post`:

@@ -1,31 +1,16 @@
-import { Photo } from "./photo.js";
+import { EntitySchema } from "typeorm";
 
 export class Post {
-    constructor(post) {
-        this.post = post
-        /*
-          id          Int      @id @default(autoincrement())
-          telegram_id BigInt
-          text        String
-          signature   String?
-          date        DateTime
-         */
-        this.data = {
-            telegram_id: post.message_id,
-            signature: post.author_signature,
-            date: new Date(post.date),
-            content: post
-        }
-
-        this.photos = post.photo?.map((it) => new Photo(it))
+    constructor(telegram_id, content, signature, date) {
+        Object.assign(this, { telegram_id, content, signature, date: new Date(date * 1000) })
     }
 
     get text() {
-        return this.post.text || this.post.caption
+        return this.content.text || this.content.caption
     }
 
     get entities() {
-        return this.post.entities || this.post.caption_entities || []
+        return this.content.entities || this.content.caption_entities || []
     }
 
     get html() {
@@ -58,6 +43,33 @@ export class Post {
         console.log(`HTML: ${html}`)
 
         return html
+    }
+
+    static get schema() {
+        return new EntitySchema({
+            name: "Post",
+            tableName: "Post",
+            target: Post,
+            columns: {
+                id: {
+                    type: "int",
+                    primary: true,
+                    generated: true
+                },
+                telegram_id: {
+                    type: "bigint"
+                },
+                content: {
+                    type: "json"
+                },
+                signature: {
+                    type: "text"
+                },
+                date: {
+                    type: "timestamp"
+                }
+            }
+        })
     }
 
 }

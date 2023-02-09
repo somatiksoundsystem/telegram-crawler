@@ -2,15 +2,22 @@ import { Telegraf } from 'telegraf'
 import { config as dotenv } from 'dotenv'
 import { debug } from './src/debug.js'
 import { post } from './src/channel-post.js'
-import { closeDatabase, db, middleware } from "./src/db.js";
+import { init } from "./src/db.js";
 import webApp from "./web.js"
 
 dotenv()
 
+const db = await init()
+const dbMiddleware = (ctx, next) => {
+    ctx.db = db
+    return next()
+}
+
+
 const bot = new Telegraf(process.env.BOT_TOKEN)
 
 bot.use(debug)
-bot.use(middleware)
+bot.use(dbMiddleware)
 bot.use(post)
 
 bot.launch().catch((e) => shutdown(e.message))
@@ -24,9 +31,10 @@ webApp.start(PORT)
 
 const shutdown = (reason) => {
     console.log(`Shutting down server. Reason: ${reason}`)
-    closeDatabase(reason)
+
+    webApp.stop()
         .then(() => bot.stop(reason))
-        .then(() => webApp.stop())
+        .then(() => db.close())
         .catch((e) => {
             console.error(e)
             process.exit(1)
