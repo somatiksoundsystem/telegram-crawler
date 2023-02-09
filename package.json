@@ -1,12 +1,11 @@
 {
   "name": "somatik-news",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Somatik News Bot Crawler",
   "main": "index.js",
   "private": true,
   "type": "module",
   "scripts": {
-    "generate": "prisma generate",
     "start": "node index.js",
     "debug": "node --inspect=0.0.0.0:9229 index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -27,7 +26,6 @@
   },
   "homepage": "https://github.com/somatiksoundsystem/telegram-crawler#readme",
   "dependencies": {
-    "@prisma/client": "4.9.0",
     "dotenv": "16.0.3",
     "ejs": "3.1.8",
     "express": "4.18.2",
@@ -36,8 +34,5 @@
     "mysql": "2.18.1",
     "telegraf": "4.11.2",
     "typeorm": "0.3.12"
-  },
-  "devDependencies": {
-    "prisma": "4.9.0"
   }
 }
