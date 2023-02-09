@@ -4,7 +4,7 @@ import { Post } from "./entity/post.js";
 export const init = async () => {
     const dataSource = new DataSource({
         type: "mysql",
-        host: "localhost",
+        host: process.env.DB_HOSTNAME,
         port: 3306,
         username: process.env.DB_USER,
         password: process.env.DB_PASSWORD,
