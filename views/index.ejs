@@ -1,17 +1,145 @@
 <!DOCTYPE html>
-<!--suppress HtmlUnknownTarget -->
 <html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <meta name="description" content="<?php echo $lang['description']; ?>"/>
+    <meta property="og:title" content="<?php echo $lang['title']; ?>"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:locale" content="ru_RU"/>
+    <meta property="og:image" content="/img/opengraph.jpg"/>
+    <meta property="og:description" content="<?php echo $descr ?>"/>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+    <link rel="apple-touch-icon" href="img/ico/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="57x57" href="img/ico/apple-touch-icon-57x57.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="img/ico/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="76x76" href="img/ico/apple-touch-icon-76x76.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="img/ico/apple-touch-icon-114x114.png"/>
+    <link rel="apple-touch-icon" sizes="120x120" href="img/ico/apple-touch-icon-120x120.png"/>
+    <link rel="apple-touch-icon" sizes="144x144" href="img/ico/apple-touch-icon-144x144.png"/>
+    <link rel="apple-touch-icon" sizes="152x152" href="img/ico/apple-touch-icon-152x152.png"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="img/ico/apple-touch-icon-180x180.png"/>
+
+
+    <!-- Bootstrap CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-grid.css" rel="stylesheet">
+    <link href="css/bootstrap-reboot.css" rel="stylesheet">
+    <link href="css/bootstrap-utilities.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Font-Awesome -->
+    <script src="https://kit.fontawesome.com/c0532d145a.js" crossorigin="anonymous"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&amp;subset=cyrillic"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700,800&amp;subset=cyrillic"
+          rel="stylesheet">
+
+    <!-- Animate.css for cool animations -->
+    <link href="css/animate.css" rel="stylesheet">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1EQHW1F4R1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+        gtag('config', 'G-1EQHW1F4R1');
+    </script>
+
 </head>
 <body>
-<h1><%= title %></h1>
-<p>Welcome to <%= title %></p>
-<ul>
-    <% for (const post of posts) { %>
-        <li><%= post.id %><%= JSON.stringify(post.content) %></li>
-    <% } %>
-</ul>
+
+<header class="header">
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-10 offset-lg-1 text-center">
+                    <img src="img/logo_somatik_black.svg" alt="Somatik Logo" class="logo">
+                    <h1 class="title"><span class="glitch" data-text="Somatik">Somatik</span><span class="glitch"
+                                                                                                   data-text="Sound">Sound</span><span
+                                class="glitch" data-text="System">System</span></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="container-fluid content">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1><%= title %></h1>
+                <p>Welcome to <%= title %></p>
+                <ul>
+                    <% for (const post of posts) { %>
+                        <li><%= post.id %><%= JSON.stringify(post.content) %></li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+<footer class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <col-12 class="text-center">
+                <p>Somatik Sound System</p>
+                <a href="mailto:ghettopsychedelic@gmail.com" class="mail">Связаться по почте</a>
+            </col-12>
+        </div>
+    </div>
+</footer>
+
+
+<!-- Scripts -->
+
+<!-- Jquery -->
+<script src="js/jquery.min.js"></script>
+
+<!-- Bootstrap Core Script -->
+<script src="js/bootstrap.bundle.min.js"></script>
+
+
+<!-- Scroll to top -->
+<div id="toTop"><i class="fa fa-arrow-circle-up"></i></div>
+<script type="text/javascript">
+    $(function () {
+        $(window).scroll(function () {
+            if ($(this).scrollTop() != 0) {
+                $('#toTop').fadeIn();
+            } else {
+                $('#toTop').fadeOut();
+            }
+        });
+        $('#toTop').click(function () {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 500);
+        });
+    });
+</script>
+
+<!-- WOW.js for animations -->
+<script src="js/wow.min.js"></script>
+<script>
+    new WOW().init();
+</script>
 </body>
 </html>
