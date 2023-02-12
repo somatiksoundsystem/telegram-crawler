@@ -1,4 +1,5 @@
 import { EntitySchema } from "typeorm";
+import { Photo } from "./photo.js";
 
 export class Post {
     constructor(telegram_id, content, signature, date) {
@@ -43,6 +44,27 @@ export class Post {
         console.log(`HTML: ${html}`)
 
         return html
+    }
+
+    get photo() {
+        console.log(`photos`)
+        const photos = this.content.photo ?? []
+        if (photos.length < 1) return undefined
+
+        const smallest = new Photo(photos[0]) // <= 90px
+        const small = new Photo(photos[1]) // <= 320px
+        const medium = new Photo(photos[2]) // <= 800px
+        const large = new Photo(photos[3]) // <= 1280px
+        return `<img srcset="${smallest.path} 90w,
+                             ${small.path} 320w,
+                             ${medium.path} 800w,
+                             ${large.path} 1280w,
+                             elva-fairy-800w.jpg 800w"
+                     sizes="(max-width: 320px) 90px,
+                            (max-width: 800px) 320px,
+                            (max-width: 1280px) 800px,
+                            1280px"
+             src="${large.path}" alt="${this.text}"> `
     }
 
     static get schema() {

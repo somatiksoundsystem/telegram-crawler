@@ -44,7 +44,7 @@
           rel="stylesheet">
 
     <!-- Animate.css for cool animations -->
-    <link href="css/animate.css" rel="stylesheet">
+    <!--    <link href="css/animate.css" rel="stylesheet">-->
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-1EQHW1F4R1"></script>
@@ -85,15 +85,19 @@
                 <p>Welcome to <%= title %></p>
                 <ul>
                     <% for (const post of posts) { %>
-                        <li><%= post.id %><%= JSON.stringify(post.content) %></li>
+                        <li class="post">
+                            <% if (post.photo) { %>
+                                <div class="post__photo"><%- post.photo %></div>
+                            <% } %>
+                            <div class="post__content"><%- post.html %></div>
+                            <div class="post__content"><%- JSON.stringify(post.content) %></div>
+                        </li>
                     <% } %>
                 </ul>
             </div>
         </div>
     </div>
 </section>
-
-
 
 
 <footer class="container-fluid">
