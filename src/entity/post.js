@@ -58,8 +58,7 @@ export class Post {
         return `<img srcset="${smallest.path} 90w,
                              ${small.path} 320w,
                              ${medium.path} 800w,
-                             ${large.path} 1280w,
-                             elva-fairy-800w.jpg 800w"
+                             ${large.path} 1280w"
                      sizes="(max-width: 320px) 90px,
                             (max-width: 800px) 320px,
                             (max-width: 1280px) 800px,
