@@ -2,21 +2,24 @@ version: "3.8"  # optional since v1.27.0
 services:
 
   crawler:
-    build:
-      context: .
-    image: somatik-crawler:latest
+    image: somatik-crawler:1
+    build: .
     ports:
       - "3000:3000"
-      - "9229:9229"
     environment:
-      NODE_ENV: development
-    volumes:
-      - ./:/app
-      - ./node_modules/:/app/node_modules
-    command: npm run debug
+      NODE_ENV: production
+      BOT_TOKEN: ${BOT_TOKEN}
+
+      DB_HOSTNAME: mysql
+      DB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+    container_name: telegram-crawler
 
   mysql:
     image: mariadb:10.9
+    hostname: mysql
     volumes:
       - somatik-mysql:/var/lib/mysql
     environment:
