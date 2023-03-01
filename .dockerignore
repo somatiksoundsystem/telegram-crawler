@@ -1,0 +1,13 @@
+# Environmental
+.fleet
+node_modules
+
+# Configurations
+.env
+.env.example
+.gitignore
+
+# Docker related
+docker-compose*.yml
+Dockerfile
+run-dev.sh
