@@ -26,7 +26,7 @@ const me = await bot.telegram.getMe()
 console.log(`Bot is started https://t.me/${me.username}!`)
 
 const PORT = 3000
-webApp.app.set(`prisma`, db)
+webApp.app.db = db
 webApp.start(PORT)
 
 const shutdown = (reason) => {
@@ -44,3 +44,12 @@ const shutdown = (reason) => {
 // Enable graceful stop
 process.once(`SIGINT`, () => shutdown(`SIGINT`))
 process.once(`SIGTERM`, () => shutdown(`SIGTERM`))
+
+process
+    .on('unhandledRejection', (reason, p) => {
+        console.error(reason, 'Unhandled Rejection at Promise', p)
+    })
+    .on('uncaughtException', err => {
+        console.error(err, 'Uncaught Exception thrown');
+        process.exit(1)
+    });

@@ -1,14 +1,15 @@
-import express from 'express'
+import Router from '@koa/router'
 import { wait } from "../src/express.js";
 
-const router = express.Router()
+const router = new Router({
+    prefix: '/file'
+})
 
 /* GET home page. */
-router.get('/:path', wait(async (req, res) => {
-    res.send(req.params.path)
-    const prisma = req.app.get(`prisma`)
-    console.log(`Prisma is ${prisma ? `defined` : `undefined`}`)
-    res.render('index', { title: 'Express', posts: await prisma.getPosts() })
-}))
+router.get('/:path', async (ctx) => {
+    const db = ctx.app.db
+    console.log(`Prisma is ${db ? `defined` : `undefined`}`)
+    await ctx.render('index', { title: 'Express', posts: await db.getPosts() })
+})
 
 export default router

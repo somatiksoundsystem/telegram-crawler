@@ -2,7 +2,7 @@ version: "3.8"  # optional since v1.27.0
 services:
 
   crawler:
-    image: somatik-crawler:1
+    image: somatik-crawler:3
     build: .
     ports:
       - "3000:3000"
