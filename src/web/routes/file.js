@@ -1,5 +1,4 @@
 import Router from '@koa/router'
-import { wait } from "../src/express.js";
 
 const router = new Router({
     prefix: '/file'

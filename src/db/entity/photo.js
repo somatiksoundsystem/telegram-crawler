@@ -1,4 +1,4 @@
-import download from "../download.js"
+import download from "../../download.js"
 
 const SAVE_FOLDER = `./data`
 

@@ -1,4 +1,4 @@
-import { Post } from "./entity/post.js";
+import { Post } from "../../db/entity/post.js";
 
 const printChannelPostInfo = (post, isNew) => {
     console.log(post)
