@@ -1,14 +1,14 @@
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 
+import Koa from 'koa'
+import koaStatic from 'koa-static'
+import render from '@koa/ejs'
+
 import indexRouter from './routes/index.js'
 import fileRouter from './routes/file.js'
-import { renderError } from "./util.js";
 import { isDev } from "../util.js";
-import koaStatic from 'koa-static'
-
-import Koa from 'koa'
-import render from '@koa/ejs'
+import { errorHandler, logger, responseTime } from "./middleware.js";
 
 const app = new Koa()
 
@@ -26,32 +26,20 @@ render(app, {
     layout: 'include/layout',
     viewExt: 'ejs',
     cache: !isDev,
-    debug: isDev
+    debug: false
 });
 
 
 // logger
 
-app.use(async (ctx, next) => {
-    try {
-        await next()
-    } finally {
-        const rt = ctx.response.get('X-Response-Time');
-        console.log(`${ctx.method} ${ctx.url} - ${rt}`);
-    }
-})
+app.use(logger)
 
 // x-response-time
 
-app.use(async (ctx, next) => {
-    const start = Date.now();
-    try {
-        await next()
-    } finally {
-        const ms = Date.now() - start;
-        ctx.set('X-Response-Time', `${ms}ms`);
-    }
-});
+app.use(responseTime)
+
+// 404 and error handler
+app.use(errorHandler)
 
 app.use(koaStatic(path.join(__root, `public`)))
 
@@ -61,10 +49,9 @@ app.use(fileRouter.routes())
 app.use(fileRouter.allowedMethods())
 
 // error handler
-app.on('error', async (err, ctx) => {
+app.on('error', (err, ctx) => {
     console.error('server error', err, ctx)
-    await renderError(ctx, err)
-});
+})
 
 
 let server
