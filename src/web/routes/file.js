@@ -1,11 +1,22 @@
 import Router from '@koa/router'
 import { createReadStream } from 'node:fs';
-import { access, constants } from 'node:fs/promises';
+import { access, constants, stat } from 'node:fs/promises';
 import { extname } from "node:path";
 
 const router = new Router({
     prefix: '/file'
 })
+
+const sendfile = async (ctx, path) => {
+    const fStat = await stat(path)
+    if (fStat.isFile()) {
+        ctx.set(`Content-Length`, fStat.size)
+        ctx.type = extname(path)
+        ctx.body = createReadStream(path)
+    } else {
+        ctx.throw(501, `Invalid internal file path`)
+    }
+}
 
 const filterPostAndFile = async (ctx, next) => {
     const request = ctx.request;
@@ -94,9 +105,7 @@ router.get('/:path', filterPostAndFile, async (ctx) => {
         console.log(`Photo downloaded`)
     }
 
-    ctx.type = extname(filepath)
-    ctx.body = createReadStream(filepath)
-
+    return sendfile(ctx, filepath)
 })
 
 export default router
