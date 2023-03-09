@@ -1,6 +1,9 @@
 import { EntitySchema } from "typeorm";
 import { Photo } from "./photo.js";
 
+/**
+ * @property {string} telegram_id
+ */
 export class Post {
     constructor(telegram_id, content, signature, date) {
         Object.assign(this, { telegram_id, content, signature, date: new Date(date * 1000) })

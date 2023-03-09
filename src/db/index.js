@@ -34,6 +34,9 @@ export const init = async () => {
         async getPosts() {
             return connection.getRepository(Post).find()
         },
+        async getPost(id) {
+            return connection.getRepository(Post).findOneBy({id})
+        },
         async close() {
             console.log(`Closing db...`)
             return dataSource.destroy()

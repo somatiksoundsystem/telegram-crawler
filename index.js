@@ -11,8 +11,9 @@ let bot = undefined
 const shutdown = async (reason) => {
     console.log(`Shutting down server. Reason: ${reason}`)
 
-    bot = await bot
-    await bot.stop(reason)
+    if (bot) {
+        await bot.stop(reason)
+    }
 
     await webApp.stop(5000)
     await db.close()
@@ -24,11 +25,10 @@ const db = await init()
 
 const token = process.env.BOT_TOKEN;
 if (token) {
-    bot = telegram(db).catch((e) => shutdown(e.message))
-}else {
+    bot = await telegram(db).catch((e) => shutdown(e.message))
+} else {
     console.warn(`BOT_TOKEN is not passed. Didn't start bot service`)
 }
-
 
 
 const PORT = 3000

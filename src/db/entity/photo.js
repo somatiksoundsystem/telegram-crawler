@@ -12,7 +12,7 @@ export class Photo {
     }
 
     get url() {
-        return `file/${this.parent.telegram_id}-${this.file_unique_id}.jpg`
+        return `file/${this.parent.id}-${Buffer.from(this.file_unique_id).toString(`base64`)}.jpg`
     }
 
     async download(telegram) {
