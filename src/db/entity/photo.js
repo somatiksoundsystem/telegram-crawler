@@ -7,7 +7,7 @@ export class Photo {
         Object.assign(this, photo)
     }
 
-    get path() {
+    get url() {
         return `file/${this.file_unique_id}-${this.width}.jpg`
     }
 

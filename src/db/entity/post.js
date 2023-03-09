@@ -55,15 +55,15 @@ export class Post {
         const small = new Photo(photos[1]) // <= 320px
         const medium = new Photo(photos[2]) // <= 800px
         const large = new Photo(photos[3]) // <= 1280px
-        return `<img srcset="${smallest.path} 90w,
-                             ${small.path} 320w,
-                             ${medium.path} 800w,
-                             ${large.path} 1280w"
+        return `<img srcset="${smallest.url} 90w,
+                             ${small.url} 320w,
+                             ${medium.url} 800w,
+                             ${large.url} 1280w"
                      sizes="(max-width: 320px) 90px,
                             (max-width: 800px) 320px,
                             (max-width: 1280px) 800px,
                             1280px"
-             src="${large.path}" alt="${this.text}"> `
+             src="${large.url}" alt="${this.text}"> `
     }
 
     static get schema() {
