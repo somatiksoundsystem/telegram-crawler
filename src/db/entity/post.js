@@ -72,7 +72,7 @@ export class Post {
     }
 
     getPhotoByUniqueId(id) {
-        return this.photos.filter((it) => it.uniqueId === id)[0]
+        return this.photos.filter((it) => it.file_unique_id === id)[0]
     }
 
     static get schema() {

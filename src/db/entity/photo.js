@@ -2,6 +2,9 @@ import download from "../../download.js"
 
 const SAVE_FOLDER = `./data`
 
+/**
+ * @property {string} file_unique_id - unique file id
+ */
 export class Photo {
     constructor(photo, parent) {
         Object.assign(this, photo)
