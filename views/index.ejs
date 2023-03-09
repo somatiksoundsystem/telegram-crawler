@@ -6,13 +6,7 @@
                 <p>Welcome to <%= title %></p>
                 <ul>
                     <% for (const post of posts) { %>
-                        <li class="post">
-                            <% if (post.photo) { %>
-                                <div class="post__photo"><%- post.photo %></div>
-                            <% } %>
-                            <div class="post__content"><%- post.html %></div>
-                            <div class="post__content"><%- JSON.stringify(post.content) %></div>
-                        </li>
+                        <%- include('include/post', {post: post}); %>
                     <% } %>
                 </ul>
             </div>

@@ -1,0 +1,7 @@
+<li class="post">
+    <% if (post.photo) { %>
+        <%- include('photo', {photo: post.photo}); %>
+    <% } %>
+    <div class="post__content"><%- post.html %></div>
+    <div class="post__content"><%- JSON.stringify(post.content) %></div>
+</li>
