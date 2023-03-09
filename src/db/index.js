@@ -35,6 +35,7 @@ export const init = async () => {
             return connection.getRepository(Post).find()
         },
         async close() {
+            console.log(`Closing db...`)
             return dataSource.destroy()
         }
     }

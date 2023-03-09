@@ -63,18 +63,18 @@ export default {
         if (server) throw new Error(`Server is already started on port: ${server.port}`)
         server = app.listen(port, () => console.log(`Server started on port ${port}`))
     },
-    stop: () => {
+    stop: (timeout = TIMEOUT) => {
         if (!server) throw new Error(`Server is not started!`)
         return new Promise((resolve, reject) => {
             console.log('Received kill signal, shutting down gracefully')
 
-            const timeout = setTimeout(
-                () => reject(`Could not close connections in ${TIMEOUT}ms`),
-                TIMEOUT)
+            const timeoutHandler = setTimeout(
+                () => reject(`Could not close connections in ${timeout}ms`),
+                timeout)
 
             server.close(() => {
                 console.log('Closed out remaining connections')
-                clearTimeout(timeout)
+                clearTimeout(timeoutHandler)
                 resolve()
                 server = undefined
             })

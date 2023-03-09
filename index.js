@@ -2,32 +2,46 @@ import { config as dotenv } from 'dotenv'
 import { init } from "./src/db/index.js";
 import webApp from "./src/web/index.js"
 import telegram from "./src/bot/index.js"
+import { abort } from "./src/util.js";
 
 dotenv()
 
+let bot = undefined
+
+const shutdown = async (reason) => {
+    console.log(`Shutting down server. Reason: ${reason}`)
+
+    bot = await bot
+    await bot.stop(reason)
+
+    await webApp.stop(5000)
+    await db.close()
+
+    process.exit(0)
+}
+
 const db = await init()
 
-// const bot = telegram(db).catch((e) => shutdown(e.message))
+const token = process.env.BOT_TOKEN;
+if (token) {
+    bot = telegram(db).catch((e) => shutdown(e.message))
+}else {
+    console.warn(`BOT_TOKEN is not passed. Didn't start bot service`)
+}
+
+
 
 const PORT = 3000
 webApp.app.db = db
 webApp.start(PORT)
 
-const shutdown = (reason) => {
-    console.log(`Shutting down server. Reason: ${reason}`)
-
-    process.exit(0)
-}
 
 // Enable graceful stop
-process.once(`SIGINT`, () => shutdown(`SIGINT`))
-process.once(`SIGTERM`, () => shutdown(`SIGTERM`))
+process.on(`SIGINT`, () => shutdown(`SIGINT`).catch(abort))
+process.on(`SIGTERM`, () => shutdown(`SIGTERM`).catch(abort))
 
 process
     .on('unhandledRejection', (reason, p) => {
         console.error(reason, 'Unhandled Rejection at Promise', p)
     })
-    .on('uncaughtException', err => {
-        console.error(err, 'Uncaught Exception thrown');
-        process.exit(1)
-    });
+    .on('uncaughtException', abort)
