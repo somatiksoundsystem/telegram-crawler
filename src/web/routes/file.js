@@ -87,22 +87,25 @@ router.get('/:path', filterPostAndFile, async (ctx) => {
     const photo = ctx.state.photo;
     console.log(photo)
 
-    const bot = ctx.app.bot
-
-    if (!bot) {
-        ctx.throw(500, `Bot is not started fail to download image`)
-    }
-
-    console.log(bot)
-
-
     const filepath = photo.filepath
+    let exists
     try {
         await access(filepath, constants.R_OK)
         console.log(`Photo found on disk`)
+        exists = true
     } catch {
+        exists = false
+    }
+
+    if (!exists) {
+        console.log(`Download photo`)
+
+        const bot = ctx.app.bot
+        if (!bot) {
+            ctx.throw(500, `Bot is not started fail to download image`)
+        }
+        console.log(bot)
         await photo.download(bot.telegram)
-        console.log(`Photo downloaded`)
     }
 
     return sendfile(ctx, filepath)
