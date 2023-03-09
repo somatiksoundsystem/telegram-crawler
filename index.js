@@ -7,7 +7,7 @@ dotenv()
 
 const db = await init()
 
-const bot = telegram(db).catch((e) => shutdown(e.message))
+// const bot = telegram(db).catch((e) => shutdown(e.message))
 
 const PORT = 3000
 webApp.app.db = db
@@ -17,13 +17,6 @@ const shutdown = (reason) => {
     console.log(`Shutting down server. Reason: ${reason}`)
 
     process.exit(0)
-    // webApp.stop()
-    //     .then(() => bot.stop(reason))
-    //     .then(() => db.close())
-    //     .catch((e) => {
-    //         console.error(e)
-    //         process.exit(1)
-    //     })
 }
 
 // Enable graceful stop

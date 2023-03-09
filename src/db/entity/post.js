@@ -46,15 +46,20 @@ export class Post {
         return html
     }
 
+    get photos() {
+        const photos = this.content.photo ?? []
+        return photos.map((it) => new Photo(it, this))
+    }
+
     get photo() {
         console.log(`photos`)
-        const photos = this.content.photo ?? []
+        const photos = this.photos
         if (photos.length < 1) return undefined
 
-        const smallest = new Photo(photos[0]) // <= 90px
-        const small = new Photo(photos[1]) // <= 320px
-        const medium = new Photo(photos[2]) // <= 800px
-        const large = new Photo(photos[3]) // <= 1280px
+        const smallest = photos[0] // <= 90px
+        const small = photos[1] // <= 320px
+        const medium = photos[2] // <= 800px
+        const large = photos[3] // <= 1280px
         return `<img srcset="${smallest.url} 90w,
                              ${small.url} 320w,
                              ${medium.url} 800w,
@@ -64,6 +69,10 @@ export class Post {
                             (max-width: 1280px) 800px,
                             1280px"
              src="${large.url}" alt="${this.text}"> `
+    }
+
+    getPhotoByUniqueId(id) {
+        return this.photos.filter((it) => it.uniqueId === id)[0]
     }
 
     static get schema() {

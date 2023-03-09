@@ -3,12 +3,13 @@ import download from "../../download.js"
 const SAVE_FOLDER = `./data`
 
 export class Photo {
-    constructor(photo) {
+    constructor(photo, parent) {
         Object.assign(this, photo)
+        this.parent = parent;
     }
 
     get url() {
-        return `file/${this.file_unique_id}-${this.width}.jpg`
+        return `file/${this.parent.telegram_id}-${this.file_unique_id}.jpg`
     }
 
     async download(telegram) {
