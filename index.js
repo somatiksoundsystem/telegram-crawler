@@ -33,6 +33,7 @@ if (token) {
 
 const PORT = 3000
 webApp.app.db = db
+webApp.app.bot = bot
 webApp.start(PORT)
 
 

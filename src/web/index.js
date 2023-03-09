@@ -7,18 +7,11 @@ import render from '@koa/ejs'
 
 import indexRouter from './routes/index.js'
 import fileRouter from './routes/file.js'
-import { isDev } from "../util.js";
+import { __root, isDev } from "../util.js";
 import { errorHandler, logger, responseTime } from "./middleware.js";
 
 const app = new Koa()
 
-const __filename = fileURLToPath(import.meta.url)
-
-const __dirname = path.dirname(__filename)
-console.log('directory-name 👉️', __dirname)
-
-const __root = path.join(__dirname, '../..')
-console.log('root-directory-name 👉️', __root)
 
 // view engine setup
 render(app, {

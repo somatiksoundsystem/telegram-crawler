@@ -2,7 +2,13 @@ import https from "node:https"
 import fs from "node:fs"
 
 const download = (url, dest, cb) => {
+    console.log(`Create write stream on ${dest}`)
     const file = fs.createWriteStream(dest)
+    file.on(`error`, (err) => {
+        console.log(err, `Failed open write stream`)
+        cb(err)
+    })
+    console.log(`Download from: ${url}`)
     https.get(url, function (response) {
         console.log('statusCode:', response.statusCode)
         console.log('headers:', response.headers)
@@ -23,6 +29,6 @@ const download = (url, dest, cb) => {
 export default async (url, dest) => new Promise((success, reject) => {
     download(url, dest, (err) => {
         if (err) return reject(err)
-        success()
+        success(dest)
     })
 })

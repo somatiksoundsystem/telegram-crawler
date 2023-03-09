@@ -1,4 +1,7 @@
 import Router from '@koa/router'
+import { createReadStream } from 'node:fs';
+import { access, constants } from 'node:fs/promises';
+import { extname } from "node:path";
 
 const router = new Router({
     prefix: '/file'
@@ -41,7 +44,7 @@ const filterPostAndFile = async (ctx, next) => {
     request.params.fileUniqueId = fileUniqueId
 
     const db = ctx.app.db
-    const post =  await db.getPost(parseInt(postId, 10))
+    const post = await db.getPost(parseInt(postId, 10))
 
     console.log(`post id: ${postId} file unique id: ${fileUniqueId}`)
 
@@ -70,9 +73,30 @@ router.get('/:path', filterPostAndFile, async (ctx) => {
     console.log(`Requesting file: ${params.path}`)
 
 
+    const photo = ctx.state.photo;
+    console.log(photo)
 
-    console.log(ctx.state.photo)
-    ctx.throw(501, `File handling is not implemented [${params.path}]`)
+    const bot = ctx.app.bot
+
+    if (!bot) {
+        ctx.throw(500, `Bot is not started fail to download image`)
+    }
+
+    console.log(bot)
+
+
+    const filepath = photo.filepath
+    try {
+        await access(filepath, constants.R_OK)
+        console.log(`Photo found on disk`)
+    } catch {
+        await photo.download(bot.telegram)
+        console.log(`Photo downloaded`)
+    }
+
+    ctx.type = extname(filepath)
+    ctx.body = createReadStream(filepath)
+
 })
 
 export default router
