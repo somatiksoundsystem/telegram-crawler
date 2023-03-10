@@ -59,11 +59,11 @@ export class Post {
         const photos = this.photos
         if (photos.length < 1) return undefined
 
-        const smallest = photos[0] // <= 90px
+        const smallest = photos[0] // <= 160px
         const small = photos[1] // <= 320px
         const medium = photos[2] // <= 800px
         const large = photos[3] // <= 1280px
-        return `<img srcset="${smallest.url} 90w,
+        return `<img srcset="${smallest.url} 160w,
                              ${small.url} 320w,
                              ${medium.url} 800w,
                              ${large.url} 1280w"
