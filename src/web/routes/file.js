@@ -80,25 +80,24 @@ const filterPostAndFile = async (ctx, next) => {
 
 /* GET home page. */
 router.get('/:path', filterPostAndFile, async (ctx) => {
-    const params = ctx.request.params
-    console.log(`Requesting file: ${params.path}`)
-
-
-    const photo = ctx.state.photo;
-    console.log(photo)
-
+    const request = ctx.request
+    const photo = ctx.state.photo
     const filepath = photo.filepath
+
+    const destination = `${(request.params.path)} -> ${filepath}`
+
     let exists
     try {
         await access(filepath, constants.R_OK)
-        console.log(`Photo found on disk`)
+
+        console.log(`File on disk: ${destination}`)
         exists = true
     } catch {
         exists = false
     }
 
     if (!exists) {
-        console.log(`Download photo`)
+        console.log(`Downloading photo: ${destination}`)
 
         const bot = ctx.app.bot
         if (!bot) {
