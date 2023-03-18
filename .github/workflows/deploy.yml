@@ -1,0 +1,47 @@
+name: Docker Deploy Production
+
+on:
+  push:
+    branches: [ "master" ]
+    # Publish semver tags as releases.
+    tags: [ 'v*.*.*' ]
+
+
+jobs:
+  build:
+    name: 'Publish on the development server'
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+
+      - uses: arwynfr/actions-docker-context@v2
+        with:
+          docker_host: ssh://${{ secrets.SSH_REMOTE_URL }}
+          context_name: 'remote'
+          ssh_cert: ${{ secrets.SSH_CERT }}
+          ssh_key: ${{ secrets.SSH_KEY }}
+
+      - run: docker-compose --context remote ls
+      - run: docker-compose --context remote up -d --build
+
+#      - name: Build, tag, and push image
+#        env:
+#          IMAGE_NAME: patrick-web
+#          ECR_REPO: patrick-web
+#          IMAGE_TAG: ${{ github.sha }}
+#        run: |
+#          docker build -t $IMAGE_NAME .
+#          echo "Successfully built image $IMAGE_NAME"
+#          docker tag $IMAGE_NAME:latest $IMAGE_NAME:$IMAGE_TAG
