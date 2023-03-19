@@ -6,6 +6,8 @@ on:
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
 
+env:
+  CONTEXT_NAME: "remote"
 
 jobs:
   build:
@@ -29,12 +31,12 @@ jobs:
       - uses: arwynfr/actions-docker-context@v2
         with:
           docker_host: ssh://${{ secrets.SSH_REMOTE_URL }}
-          context_name: 'remote'
+          context_name: ${{ env.CONTEXT_NAME }}
           ssh_cert: ${{ secrets.SSH_CERT }}
           ssh_key: ${{ secrets.SSH_KEY }}
 
-      - run: docker-compose --context remote ps
-      - run: docker-compose --context remote up -d --build
+      - run: docker-compose --context ${{ env.CONTEXT_NAME }} ps
+      - run: docker-compose --context ${{ env.CONTEXT_NAME }} up -d --build
 
 #      - name: Build, tag, and push image
 #        env:
