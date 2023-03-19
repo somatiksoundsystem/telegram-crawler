@@ -36,7 +36,7 @@ jobs:
           ssh_key: ${{ secrets.SSH_KEY }}
 
       - run: docker-compose --context ${{ env.CONTEXT_NAME }} ps
-      - run: docker-compose --context ${{ env.CONTEXT_NAME }} up -d --build
+      - run: docker-compose --context ${{ env.CONTEXT_NAME }} --progress plain up -d --build
 
 #      - name: Build, tag, and push image
 #        env:
