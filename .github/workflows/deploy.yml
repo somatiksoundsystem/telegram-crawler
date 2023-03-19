@@ -33,7 +33,7 @@ jobs:
           ssh_cert: ${{ secrets.SSH_CERT }}
           ssh_key: ${{ secrets.SSH_KEY }}
 
-      - run: docker-compose --context remote ls
+      - run: docker-compose --context remote ps
       - run: docker-compose --context remote up -d --build
 
 #      - name: Build, tag, and push image
