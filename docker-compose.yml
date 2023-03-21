@@ -4,8 +4,6 @@ services:
   crawler:
     image: somatik-crawler:3
     build: .
-    ports:
-      - "3000:3000"
     environment:
       NODE_ENV: production
       BOT_TOKEN: ${BOT_TOKEN}
@@ -14,6 +12,9 @@ services:
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
+
+      VIRTUAL_HOST: ${VIRTUAL_HOST_NAME}
+      LETSENCRYPT_HOST: ${VIRTUAL_HOST_NAME}
     container_name: telegram-crawler
 
   mysql:

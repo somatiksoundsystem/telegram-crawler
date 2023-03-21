@@ -10,6 +10,7 @@ concurrency: serial
 
 env:
   CONTEXT_NAME: "remote"
+  VIRTUAL_HOST_NAME: "news.somatiksoundsystem.com"
 
 jobs:
   deploy:
@@ -17,7 +18,9 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    environment: Production
+    environment:
+      name: Production
+      url: ${{ env.VIRTUAL_HOST_NAME }}
 
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
@@ -44,6 +47,7 @@ jobs:
       - name: Init .env file
         run: |
           echo "${{ secrets.APP_ENV }}" > .env
+          echo "${{ VIRTUAL_HOST_NAME }}" >> .env
           docker --context ${{ env.CONTEXT_NAME }} compose convert
 
       - run: docker --context ${{ env.CONTEXT_NAME }} compose up -d --build crawler
