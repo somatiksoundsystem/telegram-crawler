@@ -6,7 +6,7 @@ const router = new Router()
 router.get('/', async (ctx) => {
     const db = ctx.app.db
     console.log(`Database is ${db ? `defined` : `undefined`}`)
-    await ctx.render('index', { title: 'Express', posts: await db.getPosts() })
+    await ctx.render('index', { title: 'Somatik Sound System News', posts: await db.getPosts() })
 })
 
 export default router

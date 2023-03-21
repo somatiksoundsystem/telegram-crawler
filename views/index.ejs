@@ -1,12 +1,9 @@
-<% /** @var {String} title - page title **/ %>
 <% /** @var {Post[]} posts - posts array **/ %>
 
 <section class="container-fluid content">
     <div class="container">
         <div class="row">
             <div class="col-12 text-center">
-                <h1><%= title %></h1>
-                <p>Welcome to <%= title %></p>
                 <ul>
                     <% for (const post of posts) { %>
                         <%- include('include/post', {post: post}); %>
