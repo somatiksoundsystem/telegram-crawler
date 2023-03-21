@@ -1,4 +1,4 @@
-name: Docker Deploy Production
+name: Docker Compose Deploy
 
 on:
   push:
@@ -13,7 +13,7 @@ env:
 
 jobs:
   deploy:
-    name: 'Publish on the development server'
+    name: 'Publish on the remote server'
 
     runs-on: ubuntu-latest
 
