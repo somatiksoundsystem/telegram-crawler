@@ -1,25 +1,8 @@
-import { DataSource } from "typeorm";
 import { Post } from "./entity/post.js";
+import source from "./data-source.js"
 
 export const init = async () => {
-    const dataSource = new DataSource({
-        type: "mysql",
-        host: process.env.DB_HOSTNAME,
-        port: 3306,
-        username: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME,
-        synchronize: false,
-        logging: true,
-        entities: [Post.schema],
-        subscribers: [],
-        migrations: [],
-        extra: {
-            charset: "utf8mb4_unicode_ci"
-        },
-    })
-
-    const connection = await dataSource.initialize()
+    const connection = await source.initialize()
 
     return {
         async savePost(post) {
@@ -39,7 +22,7 @@ export const init = async () => {
         },
         async close() {
             console.log(`Closing db...`)
-            return dataSource.destroy()
+            return source.destroy()
         }
     }
 }
