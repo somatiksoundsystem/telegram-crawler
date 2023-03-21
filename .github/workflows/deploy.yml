@@ -20,7 +20,7 @@ jobs:
 
     environment:
       name: Production
-      url: ${{ env.VIRTUAL_HOST_NAME }}
+      url: https://${{ env.VIRTUAL_HOST_NAME }}
 
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
