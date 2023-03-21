@@ -47,7 +47,7 @@ jobs:
       - name: Init .env file
         run: |
           echo "${{ secrets.APP_ENV }}" > .env
-          echo "${{ VIRTUAL_HOST_NAME }}" >> .env
+          echo "${{ env.VIRTUAL_HOST_NAME }}" >> .env
           docker --context ${{ env.CONTEXT_NAME }} compose convert
 
       - run: docker --context ${{ env.CONTEXT_NAME }} compose up -d --build crawler
