@@ -27,8 +27,6 @@ services:
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
     restart: always
-    ports:
-      - "3306:3306"
 
 volumes:
   somatik-mysql:
