@@ -10,7 +10,7 @@ export class Post {
     }
 
     get text() {
-        return this.content.text || this.content.caption
+        return this.content.text || (this.content.caption ?? "")
     }
 
     get entities() {
