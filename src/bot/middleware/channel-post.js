@@ -1,4 +1,6 @@
 import { Post } from "../../db/entity/post.js";
+import { writeFile } from "node:fs/promises"
+import { __root, isDev, printError } from "../../util.js";
 
 const printChannelPostInfo = (post, isNew) => {
     console.log(post)
@@ -9,6 +11,10 @@ const printChannelPostInfo = (post, isNew) => {
 export const post = (ctx) => {
     const update = ctx.update
     const db = ctx.db
+    // TODO: collect updates for tests and remove
+    if (isDev) {
+        writeFile(`${__root}/${ctx.updateType}.json`, ctx, `utf8`).catch(printError)
+    }
     switch (ctx.updateType) {
         case `channel_post`:
             const post = update.channel_post;
