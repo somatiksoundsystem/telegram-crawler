@@ -4,8 +4,16 @@ import path from "node:path";
 export const isDev = process.env.NODE_ENV === `development`
 
 export const abort = (err) => {
-    console.error(err, 'Uncaught Exception thrown');
+    printError(err)
     process.exit(1)
+}
+
+export const printError = (e) => {
+    if (!e) {
+        console.error(`Error happened but details wasn't provided`)
+        console.trace(`Handler stacktrace`)
+    }
+    console.error(e, `Uncaught Exception thrown`)
 }
 
 const __filename = fileURLToPath(import.meta.url)
